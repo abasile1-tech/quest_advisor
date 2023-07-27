@@ -11,4 +11,6 @@ def users():
 
 @users_blueprint.route("/users/<id>")
 def show(id):
-    return "TODO: Show the user's name and the lcoations they have visited"
+    user = User.query.get(id)
+    locations = Location.query.join(Visit).filter(Visit.user_id == id)
+    return render_template("users/show.jinja", user=user, locations=locations)
